@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мінігра JavaScript</title>
+
+    <style>
+        body {
+            background: #172033;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .game {
+            width: 90%;
+            max-width: 600px;
+            height: 350px;
+            background: #263449;
+            margin: 25px auto;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        #target {
+            position: absolute;
+            font-size: 40px;
+            cursor: pointer;
+            display: none;
+            border: none;
+            background: none;
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Гра: Злови ціль!</h1>
+
+    <h2>Очки: <span id="score">0</span></h2>
+    <h3>Час: <span id="time">20</span> секунд</h3>
+
+    <button id="start">Почати гру</button>
+
+    <div class="game" id="game">
+        <button id="target">⭐</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let time = 20;
+        let timer;
+        let playing = false;
+
+        const target = document.getElementById("target");
+        const game = document.getElementById("game");
+
+        function moveTarget() {
+            const maxX = game.clientWidth - target.offsetWidth;
+            const maxY = game.clientHeight - target.offsetHeight;
+
+            target.style.left = Math.random() * maxX + "px";
+            target.style.top = Math.random() * maxY + "px";
+        }
+
+        target.addEventListener("click", function() {
+            if (playing) {
+                score++;
+                document.getElementById("score").textContent = score;
+                moveTarget();
+            }
+        });
+
+        document.getElementById("start").addEventListener("click", function() {
+            clearInterval(timer);
+
+            score = 0;
+            time = 20;
+            playing = true;
+
+            document.getElementById("score").textContent = score;
+            document.getElementById("time").textContent = time;
+
+            target.style.display = "block";
+            moveTarget();
+
+            timer = setInterval(function() {
+                time--;
+                document.getElementById("time").textContent = time;
+
+                if (time <= 0) {
+                    clearInterval(timer);
+                    playing = false;
+                    target.style.display = "none";
+                    alert("Гру завершено! Твої очки: " + score);
+                }
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>

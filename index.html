@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Animation</title>
+
+    <style>
+        body {
+            background: #101827;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #61dafb;
+        }
+
+        .space {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 30px auto;
+            background: #1e293b;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .planet {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #ff8c00, #ffdd57);
+            border-radius: 50%;
+            position: absolute;
+            top: 110px;
+            left: 20px;
+            box-shadow: 0 0 30px orange;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 8px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Анімація за допомогою JavaScript</h1>
+    <p>Керуй рухом планети за допомогою кнопок.</p>
+
+    <div class="space">
+        <div class="planet" id="planet"></div>
+    </div>
+
+    <button id="start">Старт</button>
+    <button id="pause">Пауза</button>
+    <button id="reset">Скинути</button>
+
+    <script>
+        const planet = document.getElementById("planet");
+
+        const animation = planet.animate(
+            [
+                { transform: "translateX(0px) rotate(0deg)" },
+                { transform: "translateX(450px) rotate(360deg)" }
+            ],
+            {
+                duration: 3000,
+                iterations: Infinity,
+                direction: "alternate"
+            }
+        );
+
+        animation.pause();
+
+        document.getElementById("start").addEventListener("click", function() {
+            animation.play();
+        });
+
+        document.getElementById("pause").addEventListener("click", function() {
+            animation.pause();
+        });
+
+        document.getElementById("reset").addEventListener("click", function() {
+            animation.pause();
+            animation.currentTime = 0;
+        });
+    </script>
+
+</body>
+</html>
